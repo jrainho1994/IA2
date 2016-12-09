@@ -1,12 +1,12 @@
-package sim.app.exploration.agents;
+package sim.app.IA2.exploration.agents;
 
 import java.util.Hashtable;
 import java.util.Vector;
 
-import sim.app.exploration.env.SimEnvironment;
-import sim.app.exploration.objects.Prototype;
-import sim.app.exploration.objects.SimObject;
-import sim.app.exploration.utils.Utils;
+import sim.app.IA2.exploration.env.SimEnvironment;
+import sim.app.IA2.exploration.objects.Prototype;
+import sim.app.IA2.exploration.objects.SimObject;
+import sim.app.IA2.exploration.utils.Utils;
 import sim.engine.SimState;
 import sim.util.Bag;
 import sim.util.Double2D;

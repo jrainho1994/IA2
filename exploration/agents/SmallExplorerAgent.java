@@ -1,4 +1,4 @@
-package sim.app.exploration.agents;
+package sim.app.IA2.exploration.agents;
 
 import sim.util.MutableInt2D;
 

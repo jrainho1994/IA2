@@ -1,6 +1,6 @@
-package sim.app.exploration.core;
+package sim.app.IA2.exploration.core;
 
-import sim.app.exploration.env.SimEnvironment;
+import sim.app.IA2.exploration.env.SimEnvironment;
 import sim.engine.SimState;
 
 /**

@@ -1,12 +1,12 @@
-package sim.app.exploration.utils;
+package sim.app.IA2.exploration.utils;
 
 import java.awt.Color;
 import java.util.Hashtable;
 import java.util.Random;
 import java.util.Vector;
 
-import sim.app.exploration.agents.ExplorerAgent;
-import sim.app.exploration.objects.SimObject;
+import sim.app.IA2.exploration.agents.ExplorerAgent;
+import sim.app.IA2.exploration.objects.SimObject;
 
 public class Utils {
 

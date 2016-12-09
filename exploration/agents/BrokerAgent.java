@@ -1,8 +1,8 @@
-package sim.app.exploration.agents;
+package sim.app.IA2.exploration.agents;
 
 import java.util.ArrayList;
 
-import sim.app.exploration.core.Simulator;
+import sim.app.IA2.exploration.core.Simulator;
 import sim.util.Int2D;
 import sim.util.MutableInt2D;
 

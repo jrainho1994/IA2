@@ -1,4 +1,4 @@
-package sim.app.exploration.objects;
+package sim.app.IA2.exploration.objects;
 
 import java.awt.Color;
 

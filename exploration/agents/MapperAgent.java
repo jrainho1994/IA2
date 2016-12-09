@@ -1,11 +1,11 @@
-package sim.app.exploration.agents;
+package sim.app.IA2.exploration.agents;
 
 import java.awt.Color;
 import java.lang.reflect.Constructor;
 import java.util.Vector;
 
-import sim.app.exploration.objects.Prototype;
-import sim.app.exploration.objects.SimObject;
+import sim.app.IA2.exploration.objects.Prototype;
+import sim.app.IA2.exploration.objects.SimObject;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Bag;
 import sim.util.Int2D;

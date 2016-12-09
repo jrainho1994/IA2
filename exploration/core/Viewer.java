@@ -1,15 +1,15 @@
-package sim.app.exploration.core;
+package sim.app.IA2.exploration.core;
 
 import java.awt.Color;
 import javax.swing.JFrame;
 
-import sim.app.exploration.agents.ExplorerAgent;
-import sim.app.exploration.objects.Bush;
-import sim.app.exploration.objects.House;
-import sim.app.exploration.objects.SimObject;
-import sim.app.exploration.objects.Tree;
-import sim.app.exploration.objects.Wall;
-import sim.app.exploration.objects.Water;
+import sim.app.IA2.exploration.agents.ExplorerAgent;
+import sim.app.IA2.exploration.objects.Bush;
+import sim.app.IA2.exploration.objects.House;
+import sim.app.IA2.exploration.objects.SimObject;
+import sim.app.IA2.exploration.objects.Tree;
+import sim.app.IA2.exploration.objects.Wall;
+import sim.app.IA2.exploration.objects.Water;
 import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;

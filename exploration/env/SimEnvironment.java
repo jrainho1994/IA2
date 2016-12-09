@@ -1,4 +1,4 @@
-package sim.app.exploration.env;
+package sim.app.IA2.exploration.env;
 
 import java.lang.reflect.Constructor;
 import java.util.Vector;
@@ -11,13 +11,13 @@ import sim.field.grid.SparseGrid2D;
 import sim.util.Bag;
 import sim.util.Int2D;
 import sim.util.MutableInt2D;
-import sim.app.exploration.agents.*;
-import sim.app.exploration.objects.Bush;
-import sim.app.exploration.objects.House;
-import sim.app.exploration.objects.SimObject;
-import sim.app.exploration.objects.Tree;
-import sim.app.exploration.objects.Wall;
-import sim.app.exploration.objects.Water;
+import sim.app.IA2.exploration.agents.*;
+import sim.app.IA2.exploration.objects.Bush;
+import sim.app.IA2.exploration.objects.House;
+import sim.app.IA2.exploration.objects.SimObject;
+import sim.app.IA2.exploration.objects.Tree;
+import sim.app.IA2.exploration.objects.Wall;
+import sim.app.IA2.exploration.objects.Water;
 
 public class SimEnvironment implements Steppable{
 
