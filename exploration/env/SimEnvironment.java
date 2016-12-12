@@ -358,7 +358,8 @@ public class SimEnvironment implements Steppable{
 
 	public Bag getVisibleObejcts(int x, int y, int viewRange) {
 		
-		Bag all = world.getNeighborsHamiltonianDistance(x, y, viewRange, false, null, null, null);
+//		Bag all = world.getNeighborsHamiltonianDistance(x, y, viewRange, false, null, null, null);
+		Bag all = world.getVonNeumannNeighbors(x, y, viewRange, SparseGrid2D.BOUNDED, true, null, null, null);
 		Bag visible = new Bag();
 		
 		for(Object b: all){

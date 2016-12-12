@@ -10,7 +10,7 @@ import sim.app.IA2.exploration.objects.SimObject;
 
 public class Utils {
 
-	public static final double MAX_SIZE = 100.0;
+	public static final double MAX_SIZE = 10.0;
 	public static final double COLOR_DIST = (100*100)*3;
 	
 	

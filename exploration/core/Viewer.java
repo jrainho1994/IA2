@@ -4,12 +4,14 @@ import java.awt.Color;
 import javax.swing.JFrame;
 
 import sim.app.IA2.exploration.agents.ExplorerAgent;
+import sim.app.IA2.exploration.agents.SmallExplorerAgent;
 import sim.app.IA2.exploration.objects.Bush;
 import sim.app.IA2.exploration.objects.House;
 import sim.app.IA2.exploration.objects.SimObject;
 import sim.app.IA2.exploration.objects.Tree;
 import sim.app.IA2.exploration.objects.Wall;
 import sim.app.IA2.exploration.objects.Water;
+import sim.app.IA2.exploration.agents.BigExplorerAgent;
 import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;
@@ -76,9 +78,14 @@ public class Viewer extends GUIState{
 	    }
 	    
 	    knownWorld.setPortrayalForClass(
-	        ExplorerAgent.class, new OrientedPortrayal2D(new SimplePortrayal2D(),0,2.0,
-	                Color.white,
-	                OrientedPortrayal2D.SHAPE_COMPASS) );
+		        BigExplorerAgent.class, new OrientedPortrayal2D(new SimplePortrayal2D(),0,3.0,
+		                Color.WHITE,
+		                OrientedPortrayal2D.SHAPE_COMPASS) );
+	    
+	    knownWorld.setPortrayalForClass(
+		        SmallExplorerAgent.class, new OrientedPortrayal2D(new SimplePortrayal2D(),0,1.5,
+		                Color.YELLOW,
+		                OrientedPortrayal2D.SHAPE_COMPASS) );
 	    
 	    // reschedule the displayer
 	    display.reset();
@@ -92,7 +99,7 @@ public class Viewer extends GUIState{
 	    super.init(c);
 	
 	    // make the displayer
-	    display = new Display2D(800,600,this,1);
+	    display = new Display2D(800,600,this);
 	    display.setBackdrop(Color.black);
 	
 	

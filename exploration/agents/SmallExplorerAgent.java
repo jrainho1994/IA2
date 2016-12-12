@@ -6,12 +6,17 @@ public class SmallExplorerAgent extends ExplorerAgent {
 
 	public SmallExplorerAgent(MutableInt2D loc) {
 		/*
-		 * Step -> The smaller explorer is faster
-		 * View Range -> The smaller explorer has a narrower field of vision
-		 * Identify time -> The smaller explorer has a worse scanner that takes more time to classify objects.
+		 * Standard agent: 
+		 * 		Step: Math.sqrt(2)
+		 * 		View range: 40
+		 * 		Identify time: 15
+		 * 
+		 * Small explorer agent:
+		 * 		Step -> 20% faster.
+		 * 		View Range -> 30% narrower field of vision. (40 * 0.70 = 28)
+		 * 		Identify time -> Worse scanner that takes 40% more time to classify objects. (15 * 1.40 = 21)
 		 * */
-		super(loc, 2*Math.sqrt(2), 25, 20);
-		// TODO Auto-generated constructor stub
+		super(loc, Math.sqrt(2) * 1.20, 28, 21);
 	}
 
 
