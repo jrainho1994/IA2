@@ -50,7 +50,6 @@ public class MapperAgent {
 
 	
 	public boolean isIdentified(Int2D loc) {
-		
 		return identifiedObjects[loc.getX()][loc.getY()] != null;
 	}
 
@@ -75,7 +74,7 @@ public class MapperAgent {
 				SimObject newObj = (SimObject) c.newInstance(args);
 				this.addObject(newObj);
 				
-			}catch (Exception e){
+			} catch (Exception e){
 				System.err.println("No such constructor, please give up on life.");
 			}
 		}

@@ -1,7 +1,9 @@
 package sim.app.IA2.exploration.core;
 
 import sim.app.IA2.exploration.env.SimEnvironment;
+import sim.app.IA2.exploration.env.SimEnvironmentTeams;
 import sim.engine.SimState;
+import sim.app.IA2.exploration.env.*;
 
 /**
  * @author Miguel Tavares, Pedro Gaspar
@@ -17,7 +19,7 @@ public class Simulator extends SimState{
 	public final static int HEIGHT = 300;
 	public final static int limitRadius = (int) (Math.max(WIDTH, HEIGHT) * 0.25);	// The 0.25 should be RAIUS_RATIO or something
 	
-	public SimEnvironment env;
+	public Environment env;
 	
 	/**
 	 * Default constructor that creates a new instance of the simulator
@@ -32,7 +34,8 @@ public class Simulator extends SimState{
 	 */
 	public void start(){
 		super.start();
-		env = new SimEnvironment(this, WIDTH, HEIGHT, N_BIG_EXPLORERS, N_SMALL_EXPLORERS);
+		//env = new SimEnvironment(this, WIDTH, HEIGHT, N_BIG_EXPLORERS, N_SMALL_EXPLORERS);
+		env = new SimEnvironmentTeams(this, WIDTH, HEIGHT, N_BIG_EXPLORERS, N_SMALL_EXPLORERS);
 		schedule.scheduleRepeating(env);
 		// Now, everything else is up to the environment
 	}

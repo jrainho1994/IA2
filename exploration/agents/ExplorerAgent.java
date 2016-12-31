@@ -3,7 +3,9 @@ package sim.app.IA2.exploration.agents;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import sim.app.IA2.exploration.env.Environment;
 import sim.app.IA2.exploration.env.SimEnvironment;
+import sim.app.IA2.exploration.env.Team.TeamNumber;
 import sim.app.IA2.exploration.objects.Prototype;
 import sim.app.IA2.exploration.objects.SimObject;
 import sim.app.IA2.exploration.utils.Utils;
@@ -33,7 +35,7 @@ public abstract class ExplorerAgent implements sim.portrayal.Oriented2D {
 	private Int2D target;
 	private double orientation;
 
-	public SimEnvironment env;
+	public Environment env;
 	public BrokerAgent broker;
 	public MapperAgent mapper;
 	private Vector<Prototype> knownObjects;
@@ -45,6 +47,7 @@ public abstract class ExplorerAgent implements sim.portrayal.Oriented2D {
 		this.STEP = step;
 		this.viewRange = viewRange;
 		this.IDENTIFY_TIME = identifyTime;
+		
 		this.orientation = 0;
 		this.target = null;
 		this.knownObjects = new Vector<Prototype>();
@@ -243,5 +246,4 @@ public abstract class ExplorerAgent implements sim.portrayal.Oriented2D {
 	public double getOrientation() {
 		return orientation;
 	}
-
 }

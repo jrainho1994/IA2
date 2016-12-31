@@ -1,5 +1,6 @@
 package sim.app.IA2.exploration.agents;
 
+import sim.app.IA2.exploration.env.Team.TeamNumber;
 import sim.util.MutableInt2D;
 
 public class BigExplorerAgent extends ExplorerAgent {

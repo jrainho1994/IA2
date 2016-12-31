@@ -102,7 +102,6 @@ public class Viewer extends GUIState{
 	    display = new Display2D(800,600,this);
 	    display.setBackdrop(Color.black);
 	
-	
 	    displayFrame = display.createFrame();
 	    displayFrame.setTitle("Exploration Demo");
 	    c.registerFrame(displayFrame);   // register the frame so it appears in the "Display" list
