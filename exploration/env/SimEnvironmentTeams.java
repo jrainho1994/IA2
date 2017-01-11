@@ -27,6 +27,8 @@ public class SimEnvironmentTeams extends Environment {
 	
 	private Vector<Integer> typeExplorers; //[0] big explorers, [1] small explorers
 	private RefereeAgent referee;
+	private FileWriter milestonesTeamsWriter;
+	protected HashMap<TeamNumber, HashMap<String, Double>> milestonesTeams  = new HashMap<>();
 	
 	public SimEnvironmentTeams(SimState state, int width, int height, int nBigAgents, int nSmallAgents){
 		
@@ -37,43 +39,61 @@ public class SimEnvironmentTeams extends Environment {
 		this.typeExplorers = new Vector<Integer>(2);
 		this.typeExplorers.add(nBigAgents);
 		this.typeExplorers.add(nSmallAgents);
+		
+		this.milestonesTeams.put(TeamNumber.TEAM_A, new HashMap<>());
+		this.milestonesTeams.put(TeamNumber.TEAM_B, new HashMap<>());
 		                          
 		this.setup(state);
 		
 		try {
-			writer = new FileWriter("stats.csv");
-			
-			/* Epochs file */
-			File f = new File("epochs.csv");
-			if(f.exists() && !f.isDirectory()) { 
-				epochsWriter = new FileWriter("epochs.csv", true);
-			}
-			else {
-				epochsWriter = new FileWriter("epochs.csv");
-				String headerEpoch = "";
-				for (int i=1; i<=100; i++) {
-					headerEpoch += i*50 + ", ";
-				}
-				headerEpoch += "\n";
-				epochsWriter.append(headerEpoch);
-			}
-			
-			/* Milestones file */
-			f = new File("milestones.csv");
-			if(f.exists() && !f.isDirectory()) { 
-				milestonesWriter = new FileWriter("milestones.csv", true);
-			}
-			else {
-				milestonesWriter = new FileWriter("milestones.csv");
-				String headerMilestones = "60%, 75%, 95%, 99%, 100%\n";
-				milestonesWriter.append(headerMilestones);
-			}
+			initializeStatisticFiles();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private void initializeStatisticFiles() throws IOException {
+		writer = new FileWriter("stats.csv");
+		
+		/* Epochs file */
+		File f = new File("epochs.csv");
+		if(f.exists() && !f.isDirectory()) { 
+			epochsWriter = new FileWriter("epochs.csv", true);
+		}
+		else {
+			epochsWriter = new FileWriter("epochs.csv");
+			String headerEpoch = "";
+			for (int i=1; i<=100; i++) {
+				headerEpoch += i*50 + ", ";
+			}
+			headerEpoch += "\n";
+			epochsWriter.append(headerEpoch);
+		}
+		
+		/* Milestones file */
+		f = new File("milestones.csv");
+		if(f.exists() && !f.isDirectory()) { 
+			milestonesWriter = new FileWriter("milestones.csv", true);
+		}
+		else {
+			String headerMilestones = "60%, 75%, 95%, 99%, 100%\n";
+			milestonesWriter = new FileWriter("milestones.csv");
+			milestonesWriter.append(headerMilestones);
+		}
+		
+		/* Milestones Teams file */
+		f = new File("milestonesTeams.csv");
+		if(f.exists() && !f.isDirectory()) { 
+			milestonesTeamsWriter = new FileWriter("milestonesTeams.csv", true);
+		}
+		else {
+			String headerMilestonesTeams = "60% A, 60% B, 75% A, 75% B, 95% A, 95% B, 99% A, 99% B, 100% A, 100% B\n";
+			milestonesTeamsWriter = new FileWriter("milestonesTeams.csv");
+			milestonesTeamsWriter.append(headerMilestonesTeams);
+		}
+	}
+
 	/**
 	 * This method should setup the environment: create the objects and populate
 	 * it with them and with the explorer agents
@@ -175,6 +195,7 @@ public class SimEnvironmentTeams extends Environment {
 				writer.close();
 				epochsWriter.close();
 				milestonesWriter.close();
+				milestonesTeamsWriter.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -194,26 +215,35 @@ public class SimEnvironmentTeams extends Environment {
 
 	private void printStats() {
 		int objsSeen = 0;
+		int objsSeenTeamA = 0;
+		int objsSeenTeamB = 0;
 		int nObjs = 0;
 		int nErrors = 0;
 		double percObjsSeen = 0.0;
+		double percObjsSeenTeamA = 0.0;
+		double percObjsSeenTeamB = 0.0;
 		double percError = 0.0;
 		
 		for(int i = 0; i<world.getWidth(); i++){
 			for (int j = 0; j < world.getHeight(); j++) {
 				Class real = occupied[i][j];
 				Class identified = referee.identifiedObjects[i][j];
-				//Class identified = referee.getIdentifiedBothTeams(i, j);
+				Class identifiedTeamA = referee.getTeam(TeamNumber.TEAM_A).getMapper().identifiedObjects[i][j];
+				Class identifiedTeamB = referee.getTeam(TeamNumber.TEAM_B).getMapper().identifiedObjects[i][j];
 				
-				nObjs += real != null ? 1 : 0;
+				nObjs += real != null ? 1 : 0;				
 				objsSeen += identified != null ? 1 : 0;
+				objsSeenTeamA += identifiedTeamA != null ? 1 : 0;
+				objsSeenTeamB += identifiedTeamB != null ? 1 : 0;
 				nErrors += ((real != null && identified != null) && (real != identified)) ? 1 : 0;
 			}
 		}
 		
-		percObjsSeen = ((double)objsSeen/(double)nObjs)*100.0;
-		percError = ((double)nErrors/(double)objsSeen)*100.0;
-		updateMilestones(percObjsSeen, percError);
+		percObjsSeen = ((double) objsSeen / (double) nObjs) * 100.0;
+		percError = ((double) nErrors/ (double) objsSeen) * 100.0;
+		percObjsSeenTeamA = ((double) objsSeenTeamA / (double) nObjs)*100.0;
+		percObjsSeenTeamB = ((double) objsSeenTeamB / (double) nObjs)*100.0;
+		updateMilestones(percObjsSeen, percError, percObjsSeenTeamA, percObjsSeenTeamB);
 		
 		System.err.println("SEEN: " + objsSeen);
 		System.err.println("EXIST: " + nObjs);
@@ -239,23 +269,35 @@ public class SimEnvironmentTeams extends Environment {
 		}
 	}
 	
-	private void updateMilestones (double percObjsSeen, double percError) {
+	private void updateMilestones (double percObjsSeen, double percError, double percObjsSeenTeamA, double percObjsSeenTeamB) {
 		
 		if (percObjsSeen > 60 && this.milestones.get("60%") == null) {
 			this.milestones.put("60%", this.step);
+			this.milestonesTeams.get(TeamNumber.TEAM_A).put("60%", percObjsSeenTeamA);
+			this.milestonesTeams.get(TeamNumber.TEAM_B).put("60%", percObjsSeenTeamB);
 			this.milestones.put("100%", -1);
+			this.milestonesTeams.get(TeamNumber.TEAM_A).put("100%", -1.0);
+			this.milestonesTeams.get(TeamNumber.TEAM_B).put("100%", -1.0);
 		} 
 		else if (percObjsSeen > 75 && this.milestones.get("75%") == null) {
 			this.milestones.put("75%", this.step);
+			this.milestonesTeams.get(TeamNumber.TEAM_A).put("75%", percObjsSeenTeamA);
+			this.milestonesTeams.get(TeamNumber.TEAM_B).put("75%", percObjsSeenTeamB);
 		}
 		else if (percObjsSeen > 95 && this.milestones.get("95%") == null) {
 			this.milestones.put("95%", this.step);
+			this.milestonesTeams.get(TeamNumber.TEAM_A).put("95%", percObjsSeenTeamA);
+			this.milestonesTeams.get(TeamNumber.TEAM_B).put("95%", percObjsSeenTeamB);
 		}
 		else if (percObjsSeen > 99 && this.milestones.get("99%") == null) {
 			this.milestones.put("99%", this.step);
+			this.milestonesTeams.get(TeamNumber.TEAM_A).put("99%", percObjsSeenTeamA);
+			this.milestonesTeams.get(TeamNumber.TEAM_B).put("99%", percObjsSeenTeamB);
 		}
 		else if (percObjsSeen > 100 && this.milestones.get("100%") == null) {
 			this.milestones.put("100%", this.step);
+			this.milestonesTeams.get(TeamNumber.TEAM_A).put("100%", percObjsSeenTeamA);
+			this.milestonesTeams.get(TeamNumber.TEAM_B).put("100%", percObjsSeenTeamB);
 		}
 	}
 	
@@ -285,6 +327,21 @@ public class SimEnvironmentTeams extends Environment {
 					this.milestones.get("95%") + ", " +
 					this.milestones.get("99%") + ", " +
 					this.milestones.get("100%") + "\n"
+			);
+			
+			HashMap<String, Double> ta = milestonesTeams.get(TeamNumber.TEAM_A);
+			HashMap<String, Double> tb = milestonesTeams.get(TeamNumber.TEAM_B);
+			milestonesTeamsWriter.append(
+					ta.get("60%") + ", " +
+					tb.get("60%") + ", " +
+					ta.get("75%") + ", " +
+					tb.get("75%") + ", " +
+					ta.get("95%") + ", " +
+					tb.get("95%") + ", " +
+					ta.get("99%") + ", " +
+					tb.get("99%") + ", " +
+					ta.get("100%") + ", " +
+					tb.get("100%") + "\n"
 			);
 		} catch (IOException e) {
 			e.printStackTrace();

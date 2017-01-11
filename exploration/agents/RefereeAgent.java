@@ -28,6 +28,10 @@ public class RefereeAgent extends MapperAgent {
 	public Collection<Team> getTeams() {
 		return teams.values();
 	}
+	
+	public Team getTeam (TeamNumber tn) {
+		return teams.get(tn);
+	}
 
 	public void addExplorerToTeam(ExplorerAgent explorer, TeamNumber team) {
 		teams.get(team).addExplorer(explorer);
@@ -39,12 +43,4 @@ public class RefereeAgent extends MapperAgent {
 			team.step(state);
 		}
 	}	
-
-	public Class getIdentifiedBothTeams (int column, int line) {
-		MapperAgent m1 = teams.get(TeamNumber.TEAM_A).getMapper();
-		MapperAgent m2 = teams.get(TeamNumber.TEAM_B).getMapper();
-		
-		Class cls = m1.identifiedObjects[column][line];
-		return cls != null? cls : m2.identifiedObjects[column][line];
-	}
 }
