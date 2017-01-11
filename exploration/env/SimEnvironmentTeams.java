@@ -47,43 +47,16 @@ public class SimEnvironmentTeams extends Environment {
 		
 		try {
 			initializeStatisticFiles();
+			initializeStatisticFilesExtra();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private void initializeStatisticFiles() throws IOException {
-		writer = new FileWriter("stats.csv");
-		
-		/* Epochs file */
-		File f = new File("epochs.csv");
-		if(f.exists() && !f.isDirectory()) { 
-			epochsWriter = new FileWriter("epochs.csv", true);
-		}
-		else {
-			epochsWriter = new FileWriter("epochs.csv");
-			String headerEpoch = "";
-			for (int i=1; i<=100; i++) {
-				headerEpoch += i*50 + ", ";
-			}
-			headerEpoch += "\n";
-			epochsWriter.append(headerEpoch);
-		}
-		
-		/* Milestones file */
-		f = new File("milestones.csv");
-		if(f.exists() && !f.isDirectory()) { 
-			milestonesWriter = new FileWriter("milestones.csv", true);
-		}
-		else {
-			String headerMilestones = "60%, 75%, 95%, 99%, 100%\n";
-			milestonesWriter = new FileWriter("milestones.csv");
-			milestonesWriter.append(headerMilestones);
-		}
-		
+
+	private void initializeStatisticFilesExtra() throws IOException {
 		/* Milestones Teams file */
-		f = new File("milestonesTeams.csv");
+		File f = new File("milestonesTeams.csv");
 		if(f.exists() && !f.isDirectory()) { 
 			milestonesTeamsWriter = new FileWriter("milestonesTeams.csv", true);
 		}

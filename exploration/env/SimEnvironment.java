@@ -53,7 +53,7 @@ public class SimEnvironment extends Environment {
 		this.setup(state);
 		
 		try {
-			writer = new FileWriter("stats.csv");
+			initializeStatisticFiles();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -148,6 +148,8 @@ public class SimEnvironment extends Environment {
 			try {
 				printMilestones();
 				writer.close();
+				epochsWriter.close();
+				milestonesWriter.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -189,6 +191,33 @@ public class SimEnvironment extends Environment {
 		percObjsSeen = ((double)objsSeen/(double)nObjs)*100.0;
 		percError = ((double)nErrors/(double)objsSeen)*100.0;
 		
+		updateMilestones(percObjsSeen, percError);
+		
+		System.err.println("SEEN: " + objsSeen);
+		System.err.println("EXIST: " + nObjs);
+		
+		System.err.println("-------------------------");
+		System.err.println("STATISTICS AT STEP: " + this.step);
+		System.err.println("-------------------------");
+		System.err.println("% OF OBJECTS SEEN: " + Math.ceil(percObjsSeen * 100)/100 + "%");
+		System.err.println("% OF ERROR: " + percError + "%");
+		System.err.println("-------------------------");
+		
+		try {
+			writer.append("" + step + " , " + percObjsSeen + " , " + percError + "\n");
+			epochsWriter.append(Double.toString(percObjsSeen));
+			if (step != 5000) {
+				epochsWriter.append(", ");
+			}
+			else {
+				epochsWriter.append("\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void updateMilestones(double percObjsSeen, double percError) {
 		if (percObjsSeen > 60 && this.milestones.get("60%") == null) {
 			this.milestones.put("60%", this.step);
 			this.milestones.put("100%", -1);
@@ -205,24 +234,8 @@ public class SimEnvironment extends Environment {
 		else if (percObjsSeen > 100 && this.milestones.get("100%") == null) {
 			this.milestones.put("100%", this.step);
 		}
-		
-		System.err.println("SEEN: " + objsSeen);
-		System.err.println("EXIST: " + nObjs);
-		
-		System.err.println("-------------------------");
-		System.err.println("STATISTICS AT STEP: " + this.step);
-		System.err.println("-------------------------");
-		System.err.println("% OF OBJECTS SEEN: " + Math.ceil(percObjsSeen * 100)/100 + "%");
-		System.err.println("% OF ERROR: " + percError + "%");
-		System.err.println("-------------------------");
-		
-		try {
-			writer.append("" + step + " , " + percObjsSeen + " , " + percError + "\n");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
-	
+
 	private void printMilestones() {
 		
 		System.err.println("-------------------------");
@@ -242,8 +255,16 @@ public class SimEnvironment extends Environment {
 					+ "99% = " + this.milestones.get("99%") + "\n"
 					+ "100% = " + this.milestones.get("100%") + "\n"
 			);
+			
+			milestonesWriter.append(
+					this.milestones.get("60%") + ", " +
+					this.milestones.get("75%") + ", " +
+					this.milestones.get("95%") + ", " +
+					this.milestones.get("99%") + ", " +
+					this.milestones.get("100%") + "\n"
+			);
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

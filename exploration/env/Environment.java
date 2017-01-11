@@ -1,6 +1,8 @@
 package sim.app.IA2.exploration.env;
 
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
@@ -215,6 +217,33 @@ public abstract class Environment implements Steppable {
 		world.setObjectLocation(agent, new Int2D(loc));
 	}
 	
-	
-
+	protected void initializeStatisticFiles() throws IOException {
+		writer = new FileWriter("stats.csv");
+		
+		/* Epochs file */
+		File f = new File("epochs.csv");
+		if(f.exists() && !f.isDirectory()) { 
+			epochsWriter = new FileWriter("epochs.csv", true);
+		}
+		else {
+			epochsWriter = new FileWriter("epochs.csv");
+			String headerEpoch = "";
+			for (int i=1; i<=100; i++) {
+				headerEpoch += i*50 + ", ";
+			}
+			headerEpoch += "\n";
+			epochsWriter.append(headerEpoch);
+		}
+		
+		/* Milestones file */
+		f = new File("milestones.csv");
+		if(f.exists() && !f.isDirectory()) { 
+			milestonesWriter = new FileWriter("milestones.csv", true);
+		}
+		else {
+			String headerMilestones = "60%, 75%, 95%, 99%, 100%\n";
+			milestonesWriter = new FileWriter("milestones.csv");
+			milestonesWriter.append(headerMilestones);
+		}
+	}
 }
