@@ -26,6 +26,8 @@ public abstract class Environment implements Steppable {
 	protected final int maxSteps = 5000;
 	protected int step = 0;
 	protected FileWriter writer;
+	protected FileWriter milestonesWriter;
+	protected FileWriter epochsWriter;
 	protected SparseGrid2D world;
 	protected Class[][] occupied;
 	protected HashMap<String, Integer> milestones  = new HashMap<>(); //60% - 75% - 95% - 99% - 100%
