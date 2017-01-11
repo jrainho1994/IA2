@@ -48,6 +48,17 @@ public class TeamMapperAgent extends MapperAgent {
 		/* REFEREE */
 		referee.knownWorld.setObjectLocation(agent, new Int2D(loc));
 	}
+	
+	
+	/* The TeamMapper knows what has been discovered by both teams */
+	@Override
+	public boolean isIdentified(Int2D loc) {
+		return referee.isIdentified(loc);
+	}
+	
+	public boolean isIdentifiedByTeam(Int2D loc) {
+		return identifiedObjects[loc.getX()][loc.getY()] != null;
+	}
 
 	@Override
 	public void identify(SimObject obj, Class highest) {
