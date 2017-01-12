@@ -73,34 +73,75 @@ public class SimEnvironmentTeams extends Environment {
 	 */
 	protected void setup(SimState state){
 		
-		//addExplorersRandomly(state);
-		//addExplorersCornersCenter(state);
-		addExplorersTeams(state);
+		//addExplorersRandomly(state); <-- (Not implemented)
+		//addExplorersTeamsUpCorners(state);
+		addExplorersTeamsUpTop(state);
+		//addExplorersTeamsMiddleAndCorners(state);
 		
 		//buildRandomMap(state);
 		//buildDonutMap(state);
 		buildStructuredMap(state);
 	}
 	
-	private void addExplorersTeams(SimState state) {
+	private void addExplorersTeamsMiddleAndCorners(SimState state) {
+		// 4 Explorers in the center of the map
+		for (int i = 0; i < 2; i++) {
+			MutableInt2D loc = new MutableInt2D(world.getWidth() / 2, world.getHeight() / 2);
+			addTeamExplorer(state, loc, TeamNumber.TEAM_A, true);
+			addTeamExplorer(state, loc, TeamNumber.TEAM_B, true);
+		}
+		
+		// 4 Explorers on all 4 corners
+		addTeamExplorer(state, new MutableInt2D(0, 0), TeamNumber.TEAM_A, false);
+		addTeamExplorer(state, new MutableInt2D(0, world.getHeight()), TeamNumber.TEAM_A, false);
+		addTeamExplorer(state, new MutableInt2D(world.getWidth(), 0), TeamNumber.TEAM_B, false);
+		addTeamExplorer(state, new MutableInt2D(world.getWidth(), world.getHeight()), TeamNumber.TEAM_B, false);
+		
+	}
+
+	private void addExplorersTeamsUpCorners(SimState state) {
 		for (int i = 0; i < typeExplorers.get(0); i++) {
 			if (i < typeExplorers.get(0)/2) {
-				MutableInt2D loc = new MutableInt2D(world.getWidth() / 4, 0);
+				MutableInt2D loc = new MutableInt2D(0, 0);
 				addTeamExplorer(state, loc, TeamNumber.TEAM_A, true);
 			}
 			else {
-				MutableInt2D loc = new MutableInt2D(3 * world.getWidth() / 4, 0);
+				MutableInt2D loc = new MutableInt2D(world.getWidth(), 0);
 				addTeamExplorer(state, loc, TeamNumber.TEAM_B, true);
 			}
 		}
 		
 		for (int i = 0; i < typeExplorers.get(1); i++) {
 			if (i < typeExplorers.get(1)/2) {
-				MutableInt2D loc = new MutableInt2D(world.getWidth() / 4, 0);
+				MutableInt2D loc = new MutableInt2D(0, 0);
 				addTeamExplorer(state, loc, TeamNumber.TEAM_A, false);
 			}
 			else {
-				MutableInt2D loc = new MutableInt2D(3 * world.getWidth() / 4, 0);
+				MutableInt2D loc = new MutableInt2D(world.getWidth(), 0);
+				addTeamExplorer(state, loc, TeamNumber.TEAM_B, false);
+			}
+		}
+	}
+
+	private void addExplorersTeamsUpTop(SimState state) {
+		for (int i = 0; i < typeExplorers.get(0); i++) {
+			if (i < typeExplorers.get(0)/2) {
+				MutableInt2D loc = new MutableInt2D( (world.getWidth() / typeExplorers.get(0)) * (i + 1), 0);
+				addTeamExplorer(state, loc, TeamNumber.TEAM_A, true);
+			}
+			else {
+				MutableInt2D loc = new MutableInt2D( (world.getWidth() * (2 * i + 1)) / (2 * typeExplorers.get(0)), 0);
+				addTeamExplorer(state, loc, TeamNumber.TEAM_B, true);
+			}
+		}
+		
+		for (int i = 0; i < typeExplorers.get(1); i++) {
+			if (i < typeExplorers.get(1)/2) {
+				MutableInt2D loc = new MutableInt2D( (world.getWidth() / typeExplorers.get(1)) * (i + 1), 0);
+				addTeamExplorer(state, loc, TeamNumber.TEAM_A, false);
+			}
+			else {
+				MutableInt2D loc = new MutableInt2D( (world.getWidth() * (2 * i + 1)) / (2 * typeExplorers.get(1)), 0);
 				addTeamExplorer(state, loc, TeamNumber.TEAM_B, false);
 			}
 		}

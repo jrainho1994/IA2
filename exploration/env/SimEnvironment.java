@@ -13,6 +13,7 @@ import sim.util.Bag;
 import sim.util.Int2D;
 import sim.util.MutableInt2D;
 import sim.app.IA2.exploration.agents.*;
+import sim.app.IA2.exploration.env.Team.TeamNumber;
 import sim.app.IA2.exploration.objects.Bush;
 import sim.app.IA2.exploration.objects.House;
 import sim.app.IA2.exploration.objects.SimObject;
@@ -66,14 +67,31 @@ public class SimEnvironment extends Environment {
 	protected void setup(SimState state){
 		
 		//addExplorersRandomly(state);
-		addExplorersCornersCenterV2(state);	// This always adds 8 Explorers
+		//addExplorersCornersCenter(state);	// This always adds 8 Explorers
+		addExplorersUpTop(state);
+		//addExplorersUpCorners(state);
+		//addExplorersCornersCenterV2(state); with new explorer (small explorer)
 		
 		//buildRandomMap(state);
 		//buildDonutMap(state);
 		buildStructuredMap(state);
 	}
-	
+
 	/* Explorer Adding Methods */
+	
+	private void addExplorersUpCorners(SimState state) {
+		for (int i = 0; i < 4; i++) {
+			addExplorer(state, new MutableInt2D(0, 0), true);
+			addExplorer(state, new MutableInt2D(world.getWidth(), 0), true);
+		}
+	}
+
+	private void addExplorersUpTop(SimState state) {
+		for (int i = 0; i < 8; i++) {
+			MutableInt2D loc = new MutableInt2D( (world.getWidth() / 8) * (i + 1), 0);
+			addExplorer(state, loc, true);
+		}
+	}
 	
 	private void addExplorersRandomly(SimState state) {
 		for(int i= 0; i < typeExplorers.capacity(); i++){
