@@ -20,9 +20,6 @@ public class RefereeAgent extends MapperAgent {
 		this.teams = new HashMap<>(2);
 		this.teams.put(TeamNumber.TEAM_A, new Team(TeamNumber.TEAM_A, new TeamMapperAgent(width, height, this), new BrokerAgent()));
 		this.teams.put(TeamNumber.TEAM_B, new Team(TeamNumber.TEAM_B, new TeamMapperAgent(width, height, this), new BrokerAgent()));
-		//this.identifiedObjects = teams.get(TeamNumber.TEAM_A).getMapper().identifiedObjects;
-		//this.knownWorld = teams.get(TeamNumber.TEAM_A).getMapper().knownWorld;
-		//this.knownObjects = teams.get(TeamNumber.TEAM_A).getMapper().knownObjects;
 	}
 
 	public Collection<Team> getTeams() {

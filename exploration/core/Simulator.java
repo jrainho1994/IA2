@@ -13,7 +13,7 @@ public class Simulator extends SimState {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final static int N_BIG_EXPLORERS = 8;
+	private final static int N_BIG_EXPLORERS = 4;
 	private final static int N_SMALL_EXPLORERS = 4;
 	public final static int WIDTH = 400;
 	public final static int HEIGHT = 300;
