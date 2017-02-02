@@ -47,7 +47,7 @@ public class Simulator extends SimState {
 	public void start(){
 		super.start();
 		//env = new SimEnvironment(this, WIDTH, HEIGHT, N_BIG_EXPLORERS, N_SMALL_EXPLORERS);
-		env = new SimEnvironmentTeams(this, WIDTH, HEIGHT, N_BIG_EXPLORERS, N_SMALL_EXPLORERS);
+		env = new SimEnvironmentTeams(this, WIDTH, HEIGHT, N_BIG_EXPLORERS*2, 0);
 		schedule.scheduleRepeating(env);
 		// Now, everything else is up to the environment
 	}

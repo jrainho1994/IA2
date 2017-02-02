@@ -67,8 +67,8 @@ public class SimEnvironment extends Environment {
 	protected void setup(SimState state){
 		
 		//addExplorersRandomly(state);
-		//addExplorersCornersCenter(state);	// This always adds 8 Explorers
-		addExplorersUpTop(state);
+		addExplorersCornersCenter(state);	// This always adds 8 Explorers
+		//addExplorersUpTop(state);
 		//addExplorersUpCorners(state);
 		//addExplorersCornersCenterV2(state); with new explorer (small explorer)
 		
